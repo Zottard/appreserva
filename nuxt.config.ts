@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
+  ssr: false,
   css: ['~/assets/css/main.css'],
   modules: [
     '@nuxt/fonts',
@@ -9,7 +10,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss'
   ],
   runtimeConfig: {
-    backendToken: process.env.BACKEND_TOKEN || '',
     public: {
       apiUrl: process.env.API_URL || ''
     }

@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+const { verify } = useAuth()
 const route = useRoute()
 const error = ref('')
 
@@ -17,7 +18,7 @@ if (!token) {
   error.value = 'Enlace inválido.'
 } else {
   try {
-    await $fetch('/api/auth/verify', { query: { token } })
+    await verify(token)
     await navigateTo('/')
   } catch {
     error.value = 'El enlace expiró o no es válido.'

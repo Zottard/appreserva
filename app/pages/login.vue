@@ -31,6 +31,8 @@
 </template>
 
 <script setup>
+const { requestMagicLink } = useAuth()
+
 const email = ref('')
 const sent = ref(false)
 const error = ref('')
@@ -40,7 +42,7 @@ async function submit() {
   error.value = ''
   loading.value = true
   try {
-    await $fetch('/api/auth/request', { method: 'POST', body: { email: email.value } })
+    await requestMagicLink(email.value)
     sent.value = true
   } catch {
     error.value = 'No se pudo enviar el enlace. Probá de nuevo.'
