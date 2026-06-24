@@ -1,19 +1,15 @@
 export function apiFetch(path, opts = {}) {
-  const { apiUrl, backendToken } = useRuntimeConfig().public
   return $fetch(path, {
-    baseURL: apiUrl,
+    baseURL: '/api/pwa',
     credentials: 'include',
-    ...opts,
-    headers: { token: backendToken, ...opts.headers }
+    ...opts
   })
 }
 
 export function useApi(path, opts = {}) {
-  const { apiUrl, backendToken } = useRuntimeConfig().public
   return useFetch(path, {
-    baseURL: apiUrl,
+    baseURL: '/api/pwa',
     credentials: 'include',
-    ...opts,
-    headers: { token: backendToken, ...opts.headers }
+    ...opts
   })
 }

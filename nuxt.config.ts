@@ -10,10 +10,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss'
   ],
   runtimeConfig: {
-    public: {
-      apiUrl: process.env.API_URL || '',
-      backendToken: process.env.BACKEND_TOKEN || ''
-    }
+    apiUrl: process.env.API_URL || '',
+    backendToken: process.env.BACKEND_TOKEN || ''
   },
   icon: {
     provider: 'iconify',
