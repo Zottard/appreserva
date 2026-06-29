@@ -28,8 +28,8 @@
         <p><strong>Pasajeros:</strong> {{ reserva.cant_pasajeros }}</p>
         <p><strong>Duración:</strong> {{ reserva.duration_days }} días / {{ reserva.duration_nights }} noches</p>
         <p><strong>Desde:</strong> {{ reserva.start_city_nombre }} <strong>Hasta:</strong> {{ reserva.end_city_nombre }}</p>
-        <p v-if="reserva.included"><strong>Incluye:</strong> {{ reserva.included }}</p>
-        <p v-if="reserva.not_included"><strong>No incluye:</strong> {{ reserva.not_included }}</p>
+        <p v-if="reserva.included"><strong>Incluye:</strong> <span v-html="reserva.included" /></p>
+        <p v-if="reserva.not_included"><strong>No incluye:</strong> <span v-html="reserva.not_included" /></p>
       </div>
 
       <TabList v-else-if="tab === 'itinerario'" :pending="itinerario.pending.value" :error="itinerario.error.value">
