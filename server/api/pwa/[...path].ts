@@ -14,7 +14,8 @@ export default defineEventHandler(async (event) => {
     headers: {
       token: backendToken,
       ...(cookieHeader ? { cookie: cookieHeader } : {})
-    }
+    },
+    responseType: path.includes('/download') ? 'arrayBuffer' : 'json'
   }).catch((err) => err.response)
 
   for (const setCookie of response.headers.getSetCookie?.() ?? []) {
@@ -22,5 +23,14 @@ export default defineEventHandler(async (event) => {
   }
 
   setResponseStatus(event, response.status)
+
+  if (path.includes('/download')) {
+    const contentType = response.headers.get('content-type') || 'application/octet-stream'
+    const contentDisposition = response.headers.get('content-disposition')
+    setResponseHeader(event, 'Content-Type', contentType)
+    if (contentDisposition) setResponseHeader(event, 'Content-Disposition', contentDisposition)
+    return send(event, Buffer.from(response._data as ArrayBuffer))
+  }
+
   return response._data
 })

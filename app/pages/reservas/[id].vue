@@ -22,14 +22,25 @@
         </button>
       </nav>
 
-      <div v-if="tab === 'overview'" class="flex flex-col gap-2">
+      <div v-if="tab === 'overview'" class="flex flex-col gap-3">
         <p><strong>Estado:</strong> {{ reserva.estado }}</p>
         <p><strong>Fechas:</strong> {{ reserva.fecha_salida }} → {{ reserva.fecha_regreso }}</p>
         <p><strong>Pasajeros:</strong> {{ reserva.cant_pasajeros }}</p>
-        <p><strong>Duración:</strong> {{ reserva.duration_days }} días / {{ reserva.duration_nights }} noches</p>
-        <p><strong>Desde:</strong> {{ reserva.start_city_nombre }} <strong>Hasta:</strong> {{ reserva.end_city_nombre }}</p>
+        <p v-if="reserva.duration_days"><strong>Duración:</strong> {{ reserva.duration_days }} días / {{ reserva.duration_nights }} noches</p>
+        <p v-if="reserva.start_city_nombre"><strong>Desde:</strong> {{ reserva.start_city_nombre }} <strong>Hasta:</strong> {{ reserva.end_city_nombre }}</p>
+        <p v-if="reserva.ciudades_recorrido?.length"><strong>Recorre:</strong> {{ reserva.ciudades_recorrido.join(' · ') }}</p>
+        <p v-if="reserva.tipo_salida"><strong>Tipo de salida:</strong> {{ reserva.tipo_salida }}</p>
+        <p v-if="reserva.cantidad_estrellas"><strong>Categoría hotelera:</strong> {{ '★'.repeat(reserva.cantidad_estrellas) }}</p>
+        <p v-if="reserva.aereo_incluido !== null"><strong>Aéreo incluido:</strong> {{ reserva.aereo_incluido ? 'Sí' : 'No' }}</p>
+        <div v-if="reserva.tags_especiales?.length" class="flex gap-2 flex-wrap">
+          <span v-for="t in reserva.tags_especiales" :key="t" class="text-xs bg-primary/10 text-primary rounded-full px-3 py-1">{{ t }}</span>
+        </div>
         <p v-if="reserva.included"><strong>Incluye:</strong> <span v-html="reserva.included" /></p>
         <p v-if="reserva.not_included"><strong>No incluye:</strong> <span v-html="reserva.not_included" /></p>
+        <div v-if="reserva.consejo_experto" class="border-l-4 border-primary pl-3 text-sm text-gray-dark">
+          <p class="font-semibold text-dark mb-1">Consejo del experto</p>
+          <p>{{ reserva.consejo_experto }}</p>
+        </div>
       </div>
 
       <TabList v-else-if="tab === 'itinerario'" :pending="itinerario.pending.value" :error="itinerario.error.value">
@@ -75,9 +86,11 @@
 
       <TabList v-else-if="tab === 'contactos'" :pending="contactos.pending.value" :error="contactos.error.value">
         <ul v-if="contactos.data.value?.length" class="flex flex-col gap-3">
-          <li v-for="(c, i) in contactos.data.value" :key="i" class="border border-gray-mid rounded-lg p-3">
+          <li v-for="(c, i) in contactos.data.value" :key="i" class="border border-gray-mid rounded-lg p-3 flex flex-col gap-1">
             <p class="font-semibold text-dark">{{ c.nombre }} <span class="text-xs text-gray-dark uppercase">({{ c.tipo }})</span></p>
-            <p class="text-sm text-gray-dark">{{ c.ciudad }} · {{ c.telefono }} · {{ c.whatsapp }}</p>
+            <p v-if="c.ciudad" class="text-sm text-gray-dark">{{ c.ciudad }}</p>
+            <a v-if="c.telefono" :href="`tel:${c.telefono}`" class="text-sm text-primary">{{ c.telefono }}</a>
+            <a v-if="c.whatsapp" :href="`https://wa.me/${c.whatsapp.replace(/\D/g, '')}`" target="_blank" class="text-sm text-primary">WhatsApp: {{ c.whatsapp }}</a>
           </li>
         </ul>
         <p v-else class="text-gray-dark">Sin contactos.</p>
