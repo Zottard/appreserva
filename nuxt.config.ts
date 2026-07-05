@@ -16,5 +16,11 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify',
     collections: ['tabler']
+  },
+  image: {
+    domains: ['imagenes.tourexperto.com'],
+    alias: {
+      tex: 'https://imagenes.tourexperto.com'
+    }
   }
 })

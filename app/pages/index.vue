@@ -23,7 +23,7 @@
           :to="`/reservas/${r.id}`"
           class="flex gap-4 border border-gray-mid rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary p-4"
         >
-          <NuxtImg v-if="r.img" :src="r.img" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
+          <NuxtImg v-if="r.img" :src="`https://imagenes.tourexperto.com${r.img}`" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
           <div class="flex flex-col gap-1">
             <p class="font-semibold text-dark">{{ r.nombreprod }}</p>
             <p class="text-sm text-gray-dark">{{ r.fecha_salida }} → {{ r.fecha_regreso }}</p>
