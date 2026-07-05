@@ -65,11 +65,17 @@
       </TabList>
 
       <TabList v-else-if="tab === 'hoteles'" :pending="hoteles.pending.value" :error="hoteles.error.value">
-        <ul v-if="hoteles.data.value?.length" class="flex flex-col gap-3">
-          <li v-for="(h, i) in hoteles.data.value" :key="i" class="border border-gray-mid rounded-lg p-3">
-            <p class="font-semibold text-dark">{{ h.nombre }} <span class="text-xs text-gray-dark">({{ h.categoria }})</span></p>
-            <p class="text-sm text-gray-dark">{{ h.ciudad }} · {{ h.checkin }} → {{ h.checkout }} · {{ h.noches }} noches</p>
-            <p class="text-sm text-gray-dark">Confirmación: {{ h.cod_confirmacion }}</p>
+        <ul v-if="hoteles.data.value?.length" class="flex flex-col gap-4">
+          <li v-for="(h, i) in hoteles.data.value" :key="i" class="flex flex-col gap-2">
+            <p class="font-semibold text-dark">{{ h.ciudad }}</p>
+            <div v-for="(alt, j) in h.alternativas" :key="j" class="border border-gray-mid rounded-lg p-3">
+              <p class="text-sm font-medium text-dark">
+                {{ alt.nombre }}
+                <span v-if="alt.estrellas" class="text-xs text-gray-dark ml-1">{{ '★'.repeat(alt.estrellas) }}</span>
+              </p>
+              <p v-if="alt.direccion" class="text-xs text-gray-dark mt-1">{{ alt.direccion }}</p>
+              <p class="text-xs text-gray-dark italic mt-1">previsto o similar</p>
+            </div>
           </li>
         </ul>
         <p v-else class="text-gray-dark">Sin hoteles.</p>
