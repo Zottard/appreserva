@@ -56,9 +56,12 @@
       <TabList v-else-if="tab === 'pasajeros'" :pending="pasajeros.pending.value" :error="pasajeros.error.value">
         <ul v-if="pasajeros.data.value?.length" class="flex flex-col gap-3">
           <li v-for="(p, i) in pasajeros.data.value" :key="i" class="border border-gray-mid rounded-lg p-3">
-            <p class="font-semibold text-dark">{{ p.nombre }} {{ p.apellido }} <span class="text-xs text-gray-dark uppercase">({{ p.tipo }})</span></p>
-            <p class="text-sm text-gray-dark">DNI {{ p.dni }} · Pasaporte {{ p.nro_pasaporte }}</p>
-            <p class="text-sm text-gray-dark">{{ p.nacionalidad }} · {{ p.genero }} · {{ p.fecha_nacimiento }}</p>
+            <p class="font-semibold text-dark">{{ p.nombre }} {{ p.apellido }}</p>
+            <p v-if="p.genero || p.fecha_nacimiento" class="text-sm text-gray-dark">
+              {{ [p.genero, p.fecha_nacimiento].filter(Boolean).join(' · ') }}
+            </p>
+            <p v-if="p.nro_pasaporte" class="text-sm text-gray-dark">Pasaporte {{ p.nro_pasaporte }}</p>
+            <p v-if="p.nacionalidad" class="text-sm text-gray-dark">{{ p.nacionalidad }}</p>
           </li>
         </ul>
         <p v-else class="text-gray-dark">Sin pasajeros.</p>
