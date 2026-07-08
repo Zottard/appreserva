@@ -139,12 +139,7 @@ async function selectTab(key) {
     tabLoading[key] = true
     try {
       await fetchers[key].execute()
-      if (key === 'itinerario') {
-        console.log('[DEBUG itinerario] data:', itinerario.data.value)
-        console.log('[DEBUG itinerario] error:', itinerario.error.value)
-      }
-    } catch (e) {
-      console.log('[DEBUG itinerario] excepción:', e)
+    } catch {
     } finally {
       tabLoading[key] = false
     }

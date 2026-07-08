@@ -4,8 +4,10 @@ export function formatFecha(iso) {
   return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-export function imgSrc(img, imgBase) {
+const IMG_BASE = 'https://img-dev.tourexperto.com'
+
+export function imgSrc(img) {
   if (!img) return ''
   if (img.startsWith('http')) return img
-  return `${imgBase}/${img.replace(/^\//, '')}`
+  return `${IMG_BASE}/${img.replace(/^\//, '')}`
 }

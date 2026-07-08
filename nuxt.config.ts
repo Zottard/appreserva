@@ -12,9 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiUrl: process.env.API_URL || '',
     backendToken: process.env.BACKEND_TOKEN || '',
-    public: {
-      imgBase: process.env.NUXT_PUBLIC_IMG_BASE || 'https://img-dev.tourexperto.com'
-    }
+    public: {}
   },
   icon: {
     provider: 'iconify',
