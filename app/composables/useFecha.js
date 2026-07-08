@@ -4,7 +4,7 @@ export function formatFecha(iso) {
   return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-const IMG_BASE = 'https://img-dev.tourexperto.com'
+const IMG_BASE = 'https://tex2-static-images-prd.s3.us-east-1.amazonaws.com'
 
 export function imgSrc(img) {
   if (!img) return ''
