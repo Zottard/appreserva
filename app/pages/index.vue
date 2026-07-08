@@ -23,10 +23,10 @@
           :to="`/reservas/${r.id}`"
           class="flex gap-4 border border-gray-mid rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary p-4"
         >
-          <img v-if="r.img" :src="`${imgBase}/${r.img.replace(/^\//, '')}`" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
+          <img v-if="r.img" :src="imgSrc(r.img, imgBase)" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
           <div class="flex flex-col gap-1">
             <p class="font-semibold text-dark">{{ r.nombreprod }}</p>
-            <p class="text-sm text-gray-dark">{{ r.fecha_salida }} → {{ r.fecha_regreso }}</p>
+            <p class="text-sm text-gray-dark">{{ formatFecha(r.fecha_salida) }} → {{ formatFecha(r.fecha_regreso) }}</p>
             <p class="text-xs text-secondary uppercase">{{ r.estado }}</p>
           </div>
         </NuxtLink>
