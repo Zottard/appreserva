@@ -23,7 +23,7 @@
           :to="`/reservas/${r.id}`"
           class="flex gap-4 border border-gray-mid rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary p-4"
         >
-          <img v-if="r.img" :src="imgSrc(r.img)" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
+          <img v-if="r.img" :src="imgSrc(r.img)" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" @error="e => { const fb = imgFallback(r.img); if (fb) e.target.src = fb }" />
           <div class="flex flex-col gap-1">
             <p class="font-semibold text-dark">{{ r.nombreprod }}</p>
             <p class="text-sm text-gray-dark">{{ formatFecha(r.fecha_salida) }} → {{ formatFecha(r.fecha_regreso) }}</p>
