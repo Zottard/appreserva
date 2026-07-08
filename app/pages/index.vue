@@ -42,6 +42,13 @@ const { public: { imgBase } } = useRuntimeConfig()
 const { logout } = useAuth()
 const { data: reservas, pending, error } = useReservas()
 
+watch(reservas, (val) => {
+  if (val?.length) {
+    console.log('[DEBUG img] primer reserva:', val[0].img)
+    console.log('[DEBUG img] todas:', val.map(r => ({ id: r.id, img: r.img })))
+  }
+})
+
 async function onLogout() {
   await logout()
   await navigateTo('/login')
