@@ -4,16 +4,15 @@ export function formatFecha(iso) {
   return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-const S3 = 'https://tex2-static-images-prd.s3.us-east-1.amazonaws.com'
+export function useImageUrl() {
+  const { public: { imagesUrl } } = useRuntimeConfig()
 
-export function imgSrc(img) {
-  if (!img) return ''
-  if (img.startsWith('http')) return img
-  if (img.includes('/')) return `${S3}/${img.replace(/^\//, '')}`
-  return `${S3}/productos/${img}`
-}
+  function imgSrc(img, fallback = null) {
+    const src = img || fallback
+    if (!src) return ''
+    if (src.startsWith('http')) return src
+    return `${imagesUrl}${src.replace(/^\//, '')}`
+  }
 
-export function imgFallback(img) {
-  if (!img || img.startsWith('http') || img.includes('/')) return null
-  return `${S3}/test-image-prod/${img}`
+  return { imgSrc }
 }
