@@ -44,7 +44,7 @@
       </ul>
     </State>
 
-    <ReservaDatosTex :agente="reserva?.agente" />
+    <ReservaDatosTex :agente="reserva?.vendedor ? { nombre: reserva.vendedor } : null" />
   </div>
 </template>
 
