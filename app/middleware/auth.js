@@ -1,8 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
   try {
-    await apiFetch('/reservas')
+    await apiFetch('/auth/session')
   } catch (err) {
-    if (err?.response?.status === 401) {
+    const status = err?.response?.status
+    if (status === 401 || status === 403) {
       return navigateTo('/login')
     }
   }

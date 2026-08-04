@@ -1,50 +1,37 @@
 <template>
-  <main class="max-w-2xl flex flex-col gap-4 mx-auto p-6">
-    <div class="flex items-center justify-between">
-      <h1 class="text-secondary text-2xl font-bold text-balance">Mis viajes</h1>
-      <button class="text-gray-dark text-sm" @click="onLogout">Cerrar sesión</button>
+  <div class="w-full max-w-300 flex flex-col gap-6 px-5 lg:px-12 pt-3 lg:pt-8 pb-6 lg:pb-10">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-morado text-[22px] lg:text-4xl font-bold text-balance">Mis viajes</h1>
+      <p v-if="subtitle" class="text-violeta-texto text-sm font-medium">{{ subtitle }}</p>
     </div>
 
-    <div v-if="pending" class="flex flex-col gap-3" aria-hidden="true">
-      <div v-for="i in 3" :key="i" class="h-20 bg-gray-light rounded-lg" />
-    </div>
+    <State
+      :pending="pending"
+      :error="error"
+      :empty="!reservas?.length"
+      :rows="2"
+      error-text="No se pudieron cargar tus viajes."
+      empty-text="Todavía no tenés viajes reservados."
+    >
+      <ul class="w-full grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-5">
+        <li v-for="reserva in reservas" :key="reserva.id">
+          <ViajeCard :reserva="reserva" />
+        </li>
+      </ul>
+    </State>
 
-    <p v-else-if="error" role="alert" class="text-error text-pretty">
-      No se pudieron cargar las reservas.
-    </p>
-
-    <div v-else-if="!reservas?.length" class="flex flex-col items-start gap-3">
-      <p class="text-gray-dark text-pretty">Todavía no tenés viajes.</p>
-    </div>
-
-    <ul v-else class="flex flex-col gap-3">
-      <li v-for="r in reservas" :key="r.id">
-        <NuxtLink
-          :to="`/reservas/${r.id}`"
-          class="flex gap-4 border border-gray-mid rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary p-4"
-        >
-          <img v-if="r.img || r.main_image" :src="imgSrc(r.img, r.main_image)" :alt="r.nombreprod" class="w-20 h-20 object-cover rounded-lg" />
-          <div class="flex flex-col gap-1">
-            <p class="font-semibold text-dark">{{ r.nombreprod }}</p>
-            <p class="text-sm text-gray-dark">{{ formatFecha(r.fecha_salida) }} → {{ formatFecha(r.fecha_regreso) }}</p>
-            <p class="text-xs text-secondary uppercase">{{ r.estado }}</p>
-          </div>
-        </NuxtLink>
-      </li>
-    </ul>
-  </main>
+    <Help />
+  </div>
 </template>
 
 <script setup>
 definePageMeta({ middleware: 'auth' })
 
-const { logout } = useAuth()
-const { imgSrc } = useImageUrl()
 const { data: reservas, pending, error } = useReservas()
 
-
-async function onLogout() {
-  await logout()
-  await navigateTo('/login')
-}
+const subtitle = computed(() => {
+  const total = reservas.value?.length || 0
+  if (!total) return ''
+  return total === 1 ? '1 reserva activa' : `${total} reservas activas`
+})
 </script>

@@ -1,3 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-xxl: 1440px;
+
+  --color-magenta: #D3245C;
+  --color-magenta-focused: #C02053;
+  --color-magenta-switch: #F8D3DF;
+  --color-morado: #2E0049;
+  --color-morado-hover: #470070;
+  --color-violeta: #BDACC7;
+  --color-violeta-2: #DBD2E0;
+  --color-violeta-texto: #6B5B7A;
+  --color-whatsapp: #36E85E;
+
+  --color-gris: #636363;
+  --color-gris-texto: #575757;
+  --color-gris-claro: #F9F9F9;
+  --color-gris-claro-2: #E9E9E9;
+  --color-gris-claro-3: #D9D9D9;
+
+  --color-error: #DE5E5E;
+  --color-coral: #F03A36;
+
+  --font-sans: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 4px rgba(12, 12, 13, 0.1), 0 1px 4px rgba(12, 12, 13, 0.05);
+  --shadow-nav: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-gris-texto antialiased;
+  }
+}

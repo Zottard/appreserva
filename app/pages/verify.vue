@@ -1,19 +1,25 @@
 <template>
-  <main class="max-w-md min-h-dvh flex flex-col justify-center gap-4 mx-auto p-6">
+  <div class="w-full flex flex-col gap-6">
     <template v-if="error">
-      <p role="alert" class="text-error text-pretty">{{ error }}</p>
-      <NuxtLink to="/login" class="text-primary text-sm">Volver a ingresar</NuxtLink>
+      <p role="alert" class="text-error text-sm">{{ error }}</p>
+      <ButtonPrimary to="/login">
+        Volver a ingresar
+      </ButtonPrimary>
     </template>
-    <p v-else class="text-gray-dark">Verificando acceso…</p>
-  </main>
+
+    <p v-else class="text-gris text-sm">Verificando acceso…</p>
+  </div>
 </template>
 
 <script setup>
+definePageMeta({ layout: 'auth' })
+
 const { verify } = useAuth()
 const route = useRoute()
 const error = ref('')
 
 const token = route.query.token
+
 if (!token) {
   error.value = 'Enlace inválido.'
 } else {

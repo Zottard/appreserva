@@ -1,53 +1,84 @@
 <template>
-  <main class="max-w-md min-h-dvh flex flex-col justify-center gap-6 mx-auto p-6">
-    <h1 class="text-secondary text-2xl font-bold text-balance">Mi gestión</h1>
-
-    <p v-if="sent" class="text-dark text-pretty">
-      Te enviamos un enlace de acceso a <strong>{{ email }}</strong>. Revisá tu correo.
+  <div class="w-full flex flex-col gap-6 lg:gap-8">
+    <p class="text-morado text-base font-semibold">
+      {{ sent
+        ? 'Te enviamos un correo electrónico con un link para que puedas acceder al detalle de tu viaje.'
+        : 'Iniciá sesión para ver tu itinerario, vouchers y contactos en cualquier momento de tu viaje.' }}
     </p>
 
-    <form v-else class="flex flex-col gap-4" @submit.prevent="submit">
-      <label class="flex flex-col gap-1">
-        <span class="text-sm text-gray-dark">Email</span>
-        <input
-          v-model="email"
-          type="email"
-          required
-          autocomplete="email"
-          class="w-full border border-gray-mid rounded-lg p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          placeholder="tu@email.com"
-        >
-      </label>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="w-full bg-primary rounded-lg text-light font-semibold disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary p-3"
-      >
-        {{ loading ? 'Enviando…' : 'Recibir enlace de acceso' }}
-      </button>
-      <p v-if="error" role="alert" class="text-error text-sm">{{ error }}</p>
+    <template v-if="sent">
+      <div class="w-full flex flex-col gap-6 mt-6">
+        <p class="text-morado text-sm font-medium">
+          Si no recibiste el correo podés volverlo a intentar en
+          <span class="font-inter text-coral font-medium tabular-nums">{{ countdown }}</span>
+        </p>
+
+        <ButtonPrimary :disabled="remaining > 0 || loading" @click="submit">
+          Volver a enviar
+        </ButtonPrimary>
+
+        <p v-if="error" role="alert" class="text-error text-sm">{{ error }}</p>
+      </div>
+    </template>
+
+    <form v-else class="w-full flex flex-col gap-6 lg:gap-8" @submit.prevent="submit">
+      <FormTextField v-model="email" label="Correo electrónico" type="email"
+        icon="material-symbols:mail-outline-rounded" placeholder="Ingresá aquí tu email" autocomplete="email" required
+        :error="error" />
+
+      <ButtonPrimary type="submit" :disabled="loading">
+        {{ loading ? 'Enviando…' : 'Ingresar' }}
+      </ButtonPrimary>
     </form>
-  </main>
+  </div>
 </template>
 
 <script setup>
+definePageMeta({ layout: 'auth' })
+
+const RESEND_SECONDS = 60
+
 const { requestMagicLink } = useAuth()
 
 const email = ref('')
 const sent = ref(false)
 const error = ref('')
 const loading = ref(false)
+const remaining = ref(0)
+
+let timer = null
+
+const countdown = computed(() => {
+  const m = String(Math.floor(remaining.value / 60)).padStart(2, '0')
+  const s = String(remaining.value % 60).padStart(2, '0')
+  return `${m}:${s}`
+})
+
+function startCountdown() {
+  remaining.value = RESEND_SECONDS
+  clearInterval(timer)
+  timer = setInterval(() => {
+    remaining.value--
+    if (remaining.value <= 0) clearInterval(timer)
+  }, 1000)
+}
 
 async function submit() {
+  if (loading.value || remaining.value > 0) return
+
   error.value = ''
   loading.value = true
+
   try {
     await requestMagicLink(email.value)
     sent.value = true
+    startCountdown()
   } catch {
     error.value = 'No se pudo enviar el enlace. Probá de nuevo.'
   } finally {
     loading.value = false
   }
 }
+
+onBeforeUnmount(() => clearInterval(timer))
 </script>

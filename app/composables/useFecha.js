@@ -4,14 +4,28 @@ export function formatFecha(iso) {
   return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
+export function formatShortDate(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return d.toLocaleDateString('es-AR', { day: 'numeric', month: 'short' }).replace('.', '')
+}
+
+export function formatDayMonth(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  const day = d.toLocaleDateString('es-AR', { day: 'numeric' })
+  const month = d.toLocaleDateString('es-AR', { month: 'short' }).replace('.', '')
+  return `${day} ${month.charAt(0).toUpperCase()}${month.slice(1)}`
+}
+
 export function useImageUrl() {
   const { public: { imagesUrl } } = useRuntimeConfig()
 
   function imgSrc(img, fallback = null) {
     const src = img || fallback
     if (!src) return ''
-    if (src.startsWith('http')) return src
-    return `${imagesUrl}${src.replace(/^\//, '')}`
+    if (src.startsWith('http') || src.startsWith('/')) return src
+    return `${imagesUrl}${src}`
   }
 
   return { imgSrc }

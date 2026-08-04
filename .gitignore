@@ -8,3 +8,7 @@ dist
 .env
 *.env
 !example.env
+
+# Mock local — nunca va al repo (ver CLAUDE.md § Mock local)
+server/middleware/mock.ts
+server/utils/mock-data.ts

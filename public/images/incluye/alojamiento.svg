@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #470070;
+      }
+    </style>
+  </defs>
+  <polygon class="cls-1" points="21.03 9.96 21.03 9.11 20.37 9.11 20.37 9.96 19.37 9.96 19.37 10.61 23.35 10.61 23.35 21.87 18.06 21.87 18.06 10.29 18.06 4.69 15.91 4.69 15.91 5.35 17.4 5.35 17.4 10.29 17.4 21.87 6.6 21.87 6.6 10.29 6.6 5.35 8.09 5.35 8.09 4.69 5.94 4.69 5.94 10.29 5.94 21.87 .65 21.87 .65 10.61 4.63 10.61 4.63 9.96 3.63 9.96 3.63 9.11 2.97 9.11 2.97 9.96 0 9.96 0 22.53 5.94 22.53 6.6 22.53 17.4 22.53 18.06 22.53 24 22.53 24 9.96 21.03 9.96"/>
+  <rect class="cls-1" x="2.35" y="12.23" width="1.9" height=".65"/>
+  <rect class="cls-1" x="2.35" y="14.25" width="1.9" height=".65"/>
+  <rect class="cls-1" x="2.35" y="16.27" width="1.9" height=".65"/>
+  <rect class="cls-1" x="2.35" y="18.29" width="1.9" height=".65"/>
+  <rect class="cls-1" x="19.75" y="12.23" width="1.9" height=".65"/>
+  <rect class="cls-1" x="8.55" y="8.66" width=".85" height=".65"/>
+  <rect class="cls-1" x="8.55" y="10.47" width=".85" height=".65"/>
+  <rect class="cls-1" x="8.55" y="12.28" width=".85" height=".65"/>
+  <rect class="cls-1" x="8.55" y="14.09" width=".85" height=".65"/>
+  <rect class="cls-1" x="8.55" y="15.9" width=".85" height=".65"/>
+  <rect class="cls-1" x="11.57" y="8.66" width=".85" height=".65"/>
+  <rect class="cls-1" x="11.57" y="10.47" width=".85" height=".65"/>
+  <rect class="cls-1" x="11.57" y="12.28" width=".85" height=".65"/>
+  <rect class="cls-1" x="11.57" y="14.09" width=".85" height=".65"/>
+  <rect class="cls-1" x="11.57" y="15.9" width=".85" height=".65"/>
+  <rect class="cls-1" x="14.59" y="8.66" width=".85" height=".65"/>
+  <rect class="cls-1" x="14.59" y="10.47" width=".85" height=".65"/>
+  <rect class="cls-1" x="14.59" y="12.28" width=".85" height=".65"/>
+  <rect class="cls-1" x="14.59" y="14.09" width=".85" height=".65"/>
+  <rect class="cls-1" x="14.59" y="15.9" width=".85" height=".65"/>
+  <rect class="cls-1" x="19.75" y="14.25" width="1.9" height=".65"/>
+  <rect class="cls-1" x="19.75" y="16.27" width="1.9" height=".65"/>
+  <rect class="cls-1" x="19.75" y="18.29" width="1.9" height=".65"/>
+  <polygon class="cls-1" points="13.89 20.92 13.89 18.18 10.11 18.18 10.11 20.92 10.77 20.92 10.77 18.84 13.23 18.84 13.23 20.92 13.89 20.92"/>
+  <path class="cls-1" d="M14.7,2.51h-2.37v-1.04h-.65v1.04h-2.37v5.02h5.4V2.51ZM14.05,6.87h-4.09v-3.71h4.09v3.71Z"/>
+  <polygon class="cls-1" points="11.57 5.35 12.43 5.35 12.43 5.97 13.08 5.97 13.08 4.07 12.43 4.07 12.43 4.69 11.57 4.69 11.57 4.07 10.92 4.07 10.92 5.97 11.57 5.97 11.57 5.35"/>
+</svg>
