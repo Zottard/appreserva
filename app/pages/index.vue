@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full max-w-300 flex flex-col gap-6 px-5 lg:px-12 pt-3 lg:pt-8 pb-6 lg:pb-10">
+  <div class="w-full max-w-300 flex flex-col gap-6 md:gap-9 lg:gap-14 px-5 md:px-30 lg:px-16 pt-3 md:pt-8 lg:pt-12 pb-6 md:pb-8 lg:pb-12">
     <div class="flex flex-col gap-1">
-      <h1 class="text-morado text-[22px] lg:text-4xl font-bold text-balance">Mis viajes</h1>
-      <p v-if="subtitle" class="text-violeta-texto text-sm font-medium">{{ subtitle }}</p>
+      <h1 class="text-morado text-[22px] lg:text-[32px] font-bold text-balance">Mis viajes</h1>
+      <p v-if="subtitle" class="text-violeta-texto text-sm lg:text-base font-medium">{{ subtitle }}</p>
     </div>
 
     <State
@@ -13,7 +13,7 @@
       error-text="No se pudieron cargar tus viajes."
       empty-text="Todavía no tenés viajes reservados."
     >
-      <ul class="w-full grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-5">
+      <ul class="w-full grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6">
         <li v-for="reserva in reservas" :key="reserva.id">
           <ViajeCard :reserva="reserva" />
         </li>

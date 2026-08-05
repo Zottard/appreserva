@@ -36,8 +36,14 @@ El "info" del login figura como `login-rounded` y es `info-outline-rounded`.
 Tipografía: **Raleway** para todo, salvo el contador del login que va en **Inter
 Medium** (así está en el Figma). El frame mobile del Figma mide **320px**, no 375.
 
-Breakpoint clave: **`lg` = 992px**, donde la app cambia de arquitectura —
-bottom nav + header mobile abajo de 992, sidebar fijo de 274px arriba.
+Breakpoint clave: **`lg` = 1080px**, donde la app cambia de arquitectura —
+bottom nav + header mobile abajo de 1080, sidebar fijo de 290px arriba. El
+valor sale del ancho del artboard de desktop en Figma.
+
+El rail de contenido cambia por breakpoint y se define con **padding, no con
+`max-w`**: `md:px-30` (120px, da los 528 exactos del frame de 768) y `lg:px-16`.
+Con padding el contenido acompaña el ancho de la ventana entre breakpoints; con
+un `max-w` fijo quedaba clavado y descentrado respecto del hero.
 
 ## Estructura
 
@@ -179,25 +185,51 @@ Los teléfonos por país y el WhatsApp de mensajes están **hardcodeados** en
 `DatosTex.vue`: son datos institucionales fijos, no de la reserva. Si cambian, se
 tocan ahí.
 
-El **agente de viajes** (nombre + mail) sí es por reserva y **hoy no llega del
-back** — ver el pedido en `docs/pedido-back-agente.md`. El componente lo lee de
-`reserva.agente` con la forma `{ nombre, email }`; si no viene, esa línea no se
-renderiza y el resto del bloque funciona igual.
+El **agente de viajes** sí es por reserva y llega del back como
+**`reserva.vendedor`** (un string con el nombre). `contacto.vue` lo adapta a la
+forma `{ nombre }` que espera `DatosTex`; si no viene, esa línea no se renderiza
+y el resto del bloque funciona igual. **El mail del agente no llega** — el
+componente lo soporta (`agente.email`) pero hoy queda siempre vacío.
 
 ## Estado
 
-**Mobile cerrado** contra el Figma: login, verify, instalar (con y sin sesión),
-listado de viajes, y las 5 secciones del detalle. Los headers, el bottom nav y
-los componentes compartidos también.
+**Responsive cerrado** contra el Figma en los cuatro breakpoints (mobile, md, lg,
+xxl): login, verify, instalar, listado de viajes y las 5 secciones del detalle,
+más los headers, el sidebar, el bottom nav y los componentes compartidos.
 
-**Falta desktop.** Las clases `lg:` que hay hoy son las que traía el código
-original — no están verificadas contra el diseño. El breakpoint donde cambia la
-arquitectura es `lg` (992px): abajo bottom-nav + header, arriba sidebar de 274px.
+Tres cosas que el diseño resuelve distinto según el ancho y no se deducen del
+código:
+
+- **`/instalar` no existe en desktop.** Instalar la PWA es algo de celular, así
+  que de `lg` para arriba no hay ningún acceso a esa ruta: el botón de info del
+  login y el del header mobile son `lg:hidden`, el del hero del detalle es
+  `md:hidden` y el sidebar nunca la ofreció. La ruta sigue viva para quien tenga
+  el link, pero no está diseñada para ese ancho.
+- **El hero del detalle reordena en md.** En mobile el pill de estado va abajo
+  junto al título y arriba a la derecha están info y logout; de `md` para arriba
+  el pill sube a la derecha y esos dos botones desaparecen. Por eso `StatusPill`
+  se renderiza dos veces, cada una visible en su breakpoint.
+- **Entre 768 y 1079 el detalle se queda sin logout**, porque los botones del
+  hero ya se ocultaron y el sidebar todavía no aparece. Es consecuencia del punto
+  anterior; si molesta, la salida es adelantar el sidebar o sostener los botones
+  hasta `lg`.
+
+Los íconos de `@nuxt/icon` necesitan `size-N!` para escalar: el componente
+escribe `width`/`height` inline en el SVG y un estilo inline le gana a cualquier
+clase sin `!`. El atributo `size="24"` funciona pero es un valor fijo, así que no
+sirve cuando el ícono tiene que cambiar por breakpoint.
+
+En Tailwind v4 los `<button>` quedan con `cursor: default` — el preflight ya no
+los pone en `pointer` como en v3. Cada botón necesita `cursor-pointer` explícito;
+hoy lo tiene `Accordion` y falta en `ButtonPrimary`, `ButtonIconAction` y el
+logout del sidebar.
 
 ## Pendiente
 
-- **Agente de viajes**: `reserva.agente` no llega del back. Pedido escrito en
-  `docs/pedido-back-agente.md`. No es bloqueante — la línea se omite si falta.
+- **Mail del agente**: el back manda `reserva.vendedor` (sólo el nombre). El mail
+  sigue sin llegar — pedido en `docs/pedido-back-agente.md`. No es bloqueante.
+- **`cursor-pointer`**: falta en `ButtonPrimary`, `ButtonIconAction` y el logout
+  del sidebar (ver la nota de Tailwind v4 en Estado).
 - **Campos sin confirmar contra el back**: `descripcion`/`description`,
   `incluye`/`includes`, `categoria_hoteleria`, `titular`/`nombre_titular`.
   Las páginas los leen con fallback; verificar y dejar uno solo.

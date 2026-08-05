@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full flex flex-col gap-6">
-    <p v-if="reserva.descripcion || reserva.description" class="text-violeta-texto text-xs font-medium">
+  <div class="w-full flex flex-col gap-6 md:gap-9 lg:gap-10">
+    <p v-if="reserva.descripcion || reserva.description" class="text-violeta-texto text-xs lg:text-base font-medium">
       {{ reserva.descripcion || reserva.description }}
     </p>
 
@@ -27,16 +27,16 @@
       />
     </div>
 
-    <section v-if="reserva.ciudades_recorrido?.length" class="w-full flex flex-col gap-2">
-      <h2 class="text-morado text-xl font-semibold">Recorre:</h2>
-      <p class="text-violeta-texto text-xs font-medium">
+    <section v-if="reserva.ciudades_recorrido?.length" class="w-full flex flex-col gap-3">
+      <h2 class="text-morado text-xl lg:text-[28px] font-semibold">Recorre:</h2>
+      <p class="text-violeta-texto text-xs lg:text-base font-medium">
         {{ reserva.ciudades_recorrido.join(', ') }}
       </p>
     </section>
 
-    <section v-if="includes.length" class="w-full flex flex-col gap-2">
-      <h2 class="text-morado text-xl font-semibold">Tu tour incluye:</h2>
-      <div class="w-full grid grid-cols-2 lg:grid-cols-5 gap-2">
+    <section v-if="includes.length" class="w-full flex flex-col gap-3">
+      <h2 class="text-morado text-xl lg:text-[28px] font-semibold">Tu tour incluye:</h2>
+      <div class="w-full grid grid-cols-2 md:grid-cols-[repeat(auto-fill,136px)] lg:grid-cols-[repeat(auto-fill,175px)] gap-2">
         <ReservaChip
           v-for="item in includes"
           :key="item.label"
@@ -56,9 +56,9 @@
       </div>
     </section>
 
-    <section v-if="categories.length" class="w-full flex flex-col gap-2">
-      <h2 class="text-morado text-xl font-semibold">Categoría:</h2>
-      <div class="w-full flex flex-col gap-2">
+    <section v-if="categories.length" class="w-full flex flex-col gap-3">
+      <h2 class="text-morado text-xl lg:text-[28px] font-semibold">Categoría:</h2>
+      <div class="w-full flex flex-col gap-3">
         <Row
           v-for="category in categories"
           :key="category.title"

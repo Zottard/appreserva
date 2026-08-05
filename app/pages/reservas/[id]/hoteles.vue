@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full flex flex-col gap-6">
-    <p class="text-violeta-texto text-xs font-medium">
+  <div class="w-full flex flex-col gap-6 md:gap-9 lg:gap-10">
+    <p class="text-violeta-texto text-xs lg:text-base font-medium">
       Tu alojamiento por destino. Podrás ser alojado en cualquiera de nuestros hoteles seleccionados
       ya que la asignación depende de disponibilidad y estacionalidad.
     </p>
@@ -12,7 +12,7 @@
       error-text="No se pudieron cargar los hoteles."
       empty-text="Todavía no hay hoteles asignados."
     >
-      <div class="w-full flex flex-col gap-2">
+      <div class="w-full flex flex-col gap-6 md:gap-9 lg:gap-10">
         <Accordion
           v-for="(destino, i) in hoteles"
           :key="destino.ciudad || i"

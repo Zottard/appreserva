@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full flex lg:hidden items-center justify-between gap-3 bg-white border-b border-gris-claro-2 p-5">
+  <header class="w-full flex lg:hidden items-center justify-between gap-3 bg-white border-b border-gris-claro-2 p-5 md:px-30 md:py-8">
     <div class="min-w-0 flex items-center gap-3">
       <Avatar :name="name" size="lg" />
       <div class="min-w-0 flex flex-col">

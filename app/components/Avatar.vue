@@ -1,9 +1,20 @@
 <template>
   <div
     class="shrink-0 flex items-center justify-center bg-violeta-2 rounded-full"
-    :class="size === 'lg' ? 'size-10' : 'size-9'"
+    :class="{
+      'size-13': size === 'xl',
+      'size-10 lg:size-11': size === 'lg',
+      'size-9': size !== 'xl' && size !== 'lg'
+    }"
   >
-    <p class="text-morado text-center font-bold" :class="size === 'lg' ? 'text-base' : 'text-xs'">
+    <p
+      class="text-morado text-center font-bold"
+      :class="{
+        'text-xl': size === 'xl',
+        'text-base lg:text-xl': size === 'lg',
+        'text-xs': size !== 'xl' && size !== 'lg'
+      }"
+    >
       {{ initials }}
     </p>
   </div>

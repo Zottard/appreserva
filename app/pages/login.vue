@@ -1,14 +1,14 @@
 <template>
-  <div class="w-full flex flex-col gap-6 lg:gap-8">
-    <p class="text-morado text-base font-semibold">
+  <div class="w-full flex flex-col gap-6 md:gap-9 lg:gap-15">
+    <p class="text-morado text-base lg:text-xl font-semibold">
       {{ sent
         ? 'Te enviamos un correo electrónico con un link para que puedas acceder al detalle de tu viaje.'
         : 'Iniciá sesión para ver tu itinerario, vouchers y contactos en cualquier momento de tu viaje.' }}
     </p>
 
     <template v-if="sent">
-      <div class="w-full flex flex-col gap-6 mt-6">
-        <p class="text-morado text-sm font-medium">
+      <div class="w-full flex flex-col gap-6 md:gap-8 mt-6">
+        <p class="text-morado text-sm lg:text-base font-medium">
           Si no recibiste el correo podés volverlo a intentar en
           <span class="font-inter text-coral font-medium tabular-nums">{{ countdown }}</span>
         </p>
@@ -21,7 +21,7 @@
       </div>
     </template>
 
-    <form v-else class="w-full flex flex-col gap-6 lg:gap-8" @submit.prevent="submit">
+    <form v-else class="w-full flex flex-col gap-6 md:gap-9 lg:gap-15" @submit.prevent="submit">
       <FormTextField v-model="email" label="Correo electrónico" type="email"
         icon="material-symbols:mail-outline-rounded" placeholder="Ingresá aquí tu email" autocomplete="email" required
         :error="error" />

@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout v-if="resolved && authenticated" name="default">
-    <InstalarGuia :guides="guides" />
+    <InstalarGuia :guides="guides" back-to="/" />
   </NuxtLayout>
 
   <div v-else-if="resolved" class="min-h-dvh flex flex-col bg-white">

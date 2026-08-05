@@ -3,7 +3,7 @@
     :to="`/reservas/${reserva.id}`"
     class="w-full flex flex-col rounded-[18px] shadow-card overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
   >
-    <div class="w-full h-40 flex flex-col justify-between relative bg-gris-claro-2 p-3">
+    <div class="w-full h-40 md:h-50 flex flex-col justify-between relative bg-gris-claro-2 p-3 md:p-6">
       <NuxtImg
         v-if="image"
         :src="image"
@@ -16,23 +16,25 @@
       <ReservaStatusPill :status="reserva.estado" class="relative" />
 
       <div class="relative flex flex-col gap-0.5">
-        <p class="text-white text-xl font-bold text-balance">{{ reserva.nombreprod }}</p>
-        <p class="font-inter text-white text-xs font-medium">{{ dateRange }}</p>
+        <p class="text-white text-xl lg:text-[28px] font-bold text-balance">{{ reserva.nombreprod }}</p>
+        <p class="font-inter text-white text-xs lg:text-sm font-medium">{{ dateRange }}</p>
       </div>
     </div>
 
-    <div class="w-full flex items-center justify-between gap-3 bg-gris-claro px-5 py-3">
-      <span v-if="duration" class="flex items-center gap-2 font-inter text-gris text-xs font-medium">
-        <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" size="16" class="shrink-0 text-morado" />
-        {{ duration }}
-      </span>
+    <div class="w-full flex items-center justify-between gap-3 bg-gris-claro px-5 md:px-6 py-3 md:py-6 lg:p-6">
+      <div class="min-w-0 flex flex-1 items-center lg:flex-col lg:items-start justify-between lg:justify-start gap-3">
+        <span v-if="duration" class="flex items-center gap-2 font-inter text-gris text-xs lg:text-sm font-medium">
+          <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" class="shrink-0 size-4! lg:size-5! text-morado" />
+          {{ duration }}
+        </span>
 
-      <span v-if="reserva.cant_pasajeros" class="flex items-center gap-2 font-inter text-gris text-xs font-medium">
-        <Icon name="material-symbols:groups-outline-rounded" size="16" class="shrink-0 text-morado" />
-        {{ reserva.cant_pasajeros }} pax
-      </span>
+        <span v-if="reserva.cant_pasajeros" class="flex items-center gap-2 font-inter text-gris text-xs lg:text-sm font-medium">
+          <Icon name="material-symbols:groups-outline-rounded" class="shrink-0 size-4! lg:size-5! text-morado" />
+          {{ reserva.cant_pasajeros }} pax
+        </span>
+      </div>
 
-      <Icon name="material-symbols:keyboard-arrow-right-rounded" size="16" class="shrink-0 text-morado" />
+      <Icon name="material-symbols:keyboard-arrow-right-rounded" class="shrink-0 size-4! lg:size-6! text-morado" />
     </div>
   </NuxtLink>
 </template>
