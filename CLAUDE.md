@@ -59,7 +59,7 @@ app/
     reservas/[id]/
       index.vue pasajeros.vue hoteles.vue documentos.vue contacto.vue
   components/
-    Avatar Accordion Row State Help      genéricos
+    Avatar Accordion Row State Help Modal   genéricos
     button/   Primary                    magenta; disabled = gris #D9D9D9
     default/  Sidebar Header HeaderBack Nav   app shell
     form/     TextField
@@ -71,6 +71,11 @@ app/
 `ButtonPrimary` cubre link y botón: con `to` renderiza `NuxtLink`, sin `to` un
 `<button>` (prop `type` para `submit`). El gris deshabilitado es un **estado**, no
 una variante — por eso no hay `ButtonSecondary`.
+
+`Modal.vue` es un `<dialog>` nativo, no una capa propia: el backdrop, el cierre
+con Escape y el focus trap los da el navegador. `showModal()`/`close()` se
+disparan desde un `watch` sobre `v-model`. Hoy lo usa `/documentos` para abrir el
+voucher en un `<iframe>` con el ojito, en vez de mandarlo a otra pestaña.
 
 Las 5 secciones del detalle son **rutas anidadas**, no tabs: cada una tiene URL
 propia y hace su fetch al montar. El layout arma los links de nav a partir de
@@ -228,6 +233,11 @@ logout del sidebar.
 
 - **Mail del agente**: el back manda `reserva.vendedor` (sólo el nombre). El mail
   sigue sin llegar — pedido en `docs/pedido-back-agente.md`. No es bloqueante.
+  `contacto.vue` ya acepta las dos formas (`vendedor` + `vendedor_email`, o un
+  objeto `agente`), así que cuando back lo mande no hay que tocar front.
+- **Categoría hotelera**: no llega del back. `index.vue` la busca como
+  `categoria_hoteleria`, `categoria_hotelera` o `categoria`, y si no viene, la
+  tarjeta "Hotelería" no se renderiza. Pedido en el mismo doc.
 - **`cursor-pointer`**: falta en `ButtonPrimary`, `ButtonIconAction` y el logout
   del sidebar (ver la nota de Tailwind v4 en Estado).
 - **Campos sin confirmar contra el back**: `descripcion`/`description`,

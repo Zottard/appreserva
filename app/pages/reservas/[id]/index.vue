@@ -115,11 +115,15 @@ const includes = computed(() => {
 const categories = computed(() => {
   const list = []
 
-  if (props.reserva.categoria_hoteleria) {
+  const hoteleria = props.reserva.categoria_hoteleria
+    || props.reserva.categoria_hotelera
+    || props.reserva.categoria
+
+  if (hoteleria) {
     list.push({
       icon: 'material-symbols:bed-outline-rounded',
       title: 'Hotelería',
-      subtitle: props.reserva.categoria_hoteleria
+      subtitle: typeof hoteleria === 'string' ? hoteleria : hoteleria.nombre || hoteleria.descripcion
     })
   }
 

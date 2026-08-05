@@ -15,15 +15,14 @@
         <li v-for="(voucher, i) in vouchers" :key="voucher.id || i">
           <Row :title="voucher.nombre" :subtitle="subtitle(voucher)">
             <template #actions>
-              <a
-                :href="voucher.url_s3"
-                target="_blank"
-                rel="noopener"
-                class="flex items-center justify-center size-10 lg:size-12 bg-violeta hover:bg-violeta-2 rounded-lg text-white transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+              <button
+                type="button"
+                class="flex items-center justify-center size-10 lg:size-12 bg-violeta hover:bg-violeta-2 rounded-lg text-white transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
                 :aria-label="`Ver ${voucher.nombre}`"
+                @click="preview = voucher"
               >
                 <Icon name="material-symbols:visibility-outline-rounded" size="24" />
-              </a>
+              </button>
               <a
                 :href="voucher.url_s3"
                 download
@@ -37,6 +36,26 @@
         </li>
       </ul>
     </State>
+
+    <Modal v-model="isOpen" :title="preview?.nombre || ''">
+      <template #actions>
+        <a
+          :href="preview?.url_s3"
+          download
+          class="flex items-center justify-center size-10 lg:size-12 bg-morado hover:bg-morado-hover rounded-lg text-white transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+          :aria-label="`Descargar ${preview?.nombre}`"
+        >
+          <Icon name="material-symbols:download-rounded" size="24" />
+        </a>
+      </template>
+
+      <iframe
+        v-if="preview"
+        :src="preview.url_s3"
+        class="w-full h-full border-0"
+        :title="preview.nombre"
+      />
+    </Modal>
   </div>
 </template>
 
@@ -44,6 +63,13 @@
 const route = useRoute()
 
 const { data: vouchers, pending, error } = useReservaVouchers(route.params.id)
+
+const preview = ref(null)
+
+const isOpen = computed({
+  get: () => !!preview.value,
+  set: (value) => { if (!value) preview.value = null }
+})
 
 function subtitle(voucher) {
   return voucher.tipo?.toUpperCase() || ''

@@ -44,16 +44,30 @@
       </ul>
     </State>
 
-    <ReservaDatosTex :agente="reserva?.vendedor ? { nombre: reserva.vendedor } : null" />
+    <ReservaDatosTex :agente="agente" />
   </div>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   reserva: { type: Object, default: null }
 })
 
 const route = useRoute()
+
+const agente = computed(() => {
+  const raw = props.reserva?.agente || props.reserva?.vendedor
+  if (!raw) return null
+
+  const nombre = typeof raw === 'string' ? raw : raw.nombre || raw.nombre_completo
+  if (!nombre) return null
+
+  const email = typeof raw === 'string'
+    ? props.reserva.vendedor_email || props.reserva.email_vendedor
+    : raw.email || raw.mail || raw.correo
+
+  return { nombre, email: email || '' }
+})
 
 const { data: contactos, pending, error } = useReservaContactos(route.params.id)
 

@@ -1,64 +1,65 @@
 # Pedido a back
 
-Dos cosas: el **agente de viajes** (nuevo) y confirmar que **`/auth/session`**
-existe en el back real.
+Tres cosas: el **mail del agente**, la **categoría hotelera**, y confirmar que
+**`/auth/session`** existe en el back real.
+
+Pasajeros y vouchers ya llegan bien — gracias.
 
 ---
 
 # 1. Agente de viajes en la reserva
 
-## Qué necesitamos
+## Estado: falta sólo el mail
 
-El **agente de viajes de Tour Experto asignado a la reserva**: nombre y mail.
+Ya llega **`reserva.vendedor`** con el nombre y se ve OK en pantalla. **Falta el
+mail**, que es lo único que bloquea la línea de contacto del agente.
+
+El front ya lo acepta en cualquiera de estas formas, la que les quede más cómoda:
+
+```json
+{ "vendedor": "Francini", "vendedor_email": "francini@tourexperto.com" }
+```
+
+```json
+{ "agente": { "nombre": "Francini", "email": "francini@tourexperto.com" } }
+```
+
+No hace falta que cambien `vendedor` de string a objeto si les complica: con
+agregar `vendedor_email` al lado alcanza.
 
 La pantalla `/contacto` de la PWA muestra abajo un bloque "Datos de Tour Experto"
 con el agente, el WhatsApp de mensajes y los teléfonos por país. Los teléfonos y
 el WhatsApp los tenemos hardcodeados (son fijos de la agencia), pero el agente
-cambia por reserva y hoy no lo recibimos.
+cambia por reserva.
 
-Hoy la primera línea de ese bloque no se renderiza.
+---
 
-## Qué revisamos antes de pedirlo
+# 1.b Categoría hotelera
 
-- `GET /reservas/{id}` — no trae ningún campo de agente/asesor/vendedor.
-- `GET /reservas/{id}/contactos` — trae los **operadores del tour** (Europamundo,
-  Special Tours, hoteles), que es otra cosa: son los mayoristas para emergencias
-  en destino, no la persona de Tour Experto que le vendió el viaje al cliente.
+No la estamos recibiendo. En `GET /reservas/{id}` el front busca
+**`categoria_hoteleria`** (y tolera `categoria_hotelera` o `categoria`), pero no
+viene ninguno, así que la tarjeta "Hotelería" del detalle no se renderiza.
 
-## Forma que espera el front
+Es el dato tipo `"Económica (Hoteles 3*/4*)"` / `"Superior (Hoteles 5*)"`.
 
-En el objeto de `GET /reservas/{id}`:
+¿Existe del lado de ustedes? Si se llama distinto, decinos el nombre y lo
+mapeamos.
 
-```json
-{
-  "id": 1,
-  "nombreprod": "Europa Clásica",
-  "agente": {
-    "nombre": "Francini",
-    "email": "francini@tourexperto.com"
-  }
-}
-```
+## Notas
 
-Se renderiza así:
+- El agente **no es lo mismo** que `GET /reservas/{id}/contactos`: ahí vienen los
+  **operadores del tour** (Europamundo, Special Tours, hoteles), los mayoristas
+  para emergencias en destino. El agente es la persona de Tour Experto que le
+  vendió el viaje al cliente.
+- Con el mail, se renderiza así:
 
 ```
 Francini, tu agente de viajes:
 francini@tourexperto.com
 ```
 
-## Notas
-
-- Si el campo se llama distinto del lado de ustedes (`vendedor`, `asesor`,
-  `ejecutivo_cuenta`), no hay problema — decinos el nombre y lo mapeamos. Lo que
-  importa es que lleguen **nombre y mail**.
-- Si prefieren exponerlo en `/contactos` en vez de en la reserva, también sirve;
-  necesitaríamos que venga separado de los operadores para no mezclarlos en la
-  misma lista.
-- El front ya tolera que no llegue: si `agente` es `null` o falta, esa línea se
-  omite y el resto del bloque funciona. **No es bloqueante para publicar.**
-- Si el mail no está disponible pero sí el nombre, también sirve — se muestra el
-  nombre solo.
+- El front ya tolera que el mail no llegue: hoy se muestra el nombre solo y el
+  resto del bloque funciona. **No es bloqueante para publicar.**
 
 ---
 
