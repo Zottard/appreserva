@@ -18,7 +18,7 @@
     >
       <ul class="w-full flex flex-col gap-3">
         <li v-for="(contacto, i) in contactos" :key="contacto.id || i">
-          <Row :title="contacto.nombre" :subtitle="contacto.tipo || contacto.ciudad">
+          <Row :title="contacto.nombre" :subtitle="subtitulo(contacto)">
             <template #actions>
               <a
                 v-if="contacto.whatsapp"
@@ -70,6 +70,13 @@ const agente = computed(() => {
 })
 
 const { data: contactos, pending, error } = useReservaContactos(route.params.id)
+
+function subtitulo(contacto) {
+  if (contacto.tipo === 'tourexperto') return null
+  if (contacto.whatsapp) return 'Solamente mensajes'
+  if (contacto.telefono) return 'Emergencias y consultas'
+  return null
+}
 
 function onlyDigits(value) {
   return String(value).replace(/\D/g, '')
