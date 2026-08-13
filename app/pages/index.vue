@@ -18,9 +18,8 @@
           <ViajeCard :reserva="reserva" />
         </li>
       </ul>
+      <Help class="mt-3 md:mt-0" />
     </State>
-
-    <Help />
   </div>
 </template>
 

@@ -34,7 +34,7 @@
     <div class="flex flex-col items-start gap-2 relative">
       <ReservaStatusPill :status="reserva.estado" class="md:hidden" />
       <h1 class="text-white text-xl lg:text-3xl font-bold text-balance">
-        {{ reserva.nombreprod }}
+        {{ reserva.nombre_programa || reserva.nombreprod }}
       </h1>
     </div>
   </div>

@@ -17,7 +17,7 @@
             <template #actions>
               <button
                 type="button"
-                class="flex items-center justify-center size-10 lg:size-12 bg-violeta hover:bg-violeta-2 rounded-lg text-white transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+                class="flex items-center justify-center size-10 lg:size-12 bg-morado hover:bg-morado-hover rounded-lg text-white transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
                 :aria-label="`Ver ${voucher.nombre}`"
                 @click="preview = voucher"
               >
