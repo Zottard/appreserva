@@ -12,12 +12,12 @@ export function formatShortDate(iso) {
 
 export function formatDayMonth(iso) {
   if (!iso) return ''
-  // Tomar solo YYYY-MM-DD y construir con new Date(y, m, d) para forzar hora local
-  const [year, month, day] = iso.substring(0, 10).split('-').map(Number)
-  const d = new Date(year, month - 1, day + 1)
-  const dayStr = d.toLocaleDateString('es-AR', { day: 'numeric' })
-  const monthStr = d.toLocaleDateString('es-AR', { month: 'short' }).replace('.', '')
-  return `${dayStr} ${monthStr.charAt(0).toUpperCase()}${monthStr.slice(1)}`
+  // Date-only strings (YYYY-MM-DD) son UTC; forzar local para evitar el shift de día
+  const str = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? `${iso}T00:00:00` : iso
+  const d = new Date(str)
+  const day = d.toLocaleDateString('es-AR', { day: 'numeric' })
+  const month = d.toLocaleDateString('es-AR', { month: 'short' }).replace('.', '')
+  return `${day} ${month.charAt(0).toUpperCase()}${month.slice(1)}`
 }
 
 export function useImageUrl() {
