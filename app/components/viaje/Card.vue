@@ -7,7 +7,7 @@
       <NuxtImg
         v-if="image"
         :src="image"
-        :alt="reserva.nombreprod"
+        :alt="reserva.nombre_programa || reserva.nombreprod"
         class="w-full h-full absolute inset-0 object-cover"
         loading="lazy"
       />
@@ -16,7 +16,7 @@
       <ReservaStatusPill :status="reserva.estado" class="relative" />
 
       <div class="relative flex flex-col gap-0.5">
-        <p class="text-white text-xl lg:text-[28px] font-bold text-balance">{{ reserva.nombreprod }}</p>
+        <p class="text-white text-xl lg:text-[28px] font-bold text-balance">{{ reserva.nombre_programa || reserva.nombreprod }}</p>
         <p class="font-inter text-white text-xs lg:text-sm font-medium">{{ dateRange }}</p>
       </div>
     </div>
