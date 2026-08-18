@@ -12,8 +12,7 @@ export function formatShortDate(iso) {
 
 export function formatDayMonth(iso) {
   if (!iso) return ''
-  // Parsear al mediodía para que ningún offset UTC desplace el día
-  const d = new Date(iso.substring(0, 10) + 'T12:00:00')
+  const d = new Date(iso)
   const day = d.toLocaleDateString('es-AR', { day: 'numeric' })
   const month = d.toLocaleDateString('es-AR', { month: 'short' }).replace('.', '')
   return `${day} ${month.charAt(0).toUpperCase()}${month.slice(1)}`
