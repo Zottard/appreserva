@@ -12,7 +12,7 @@ export function formatShortDate(iso) {
 
 export function formatDayMonth(iso) {
   if (!iso) return ''
-  const d = new Date(iso)
+  const d = new Date(iso.substring(0, 10) + 'T12:00:00')
   const day = d.toLocaleDateString('es-AR', { day: 'numeric' })
   const month = d.toLocaleDateString('es-AR', { month: 'short' }).replace('.', '')
   return `${day} ${month.charAt(0).toUpperCase()}${month.slice(1)}`
