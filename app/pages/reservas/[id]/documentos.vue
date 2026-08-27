@@ -16,6 +16,7 @@
           <Row :title="voucher.nombre" :subtitle="subtitle(voucher)">
             <template #actions>
               <button
+                v-if="isPreviewable(voucher)"
                 type="button"
                 class="flex items-center justify-center size-10 lg:size-12 bg-morado hover:bg-morado-hover rounded-lg text-white transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
                 :aria-label="`Ver ${voucher.nombre}`"
@@ -70,6 +71,11 @@ const isOpen = computed({
   get: () => !!preview.value,
   set: (value) => { if (!value) preview.value = null }
 })
+
+// solo el PDF se puede ver en un iframe; el resto va directo a descarga
+function isPreviewable(voucher) {
+  return /\.pdf(\?|$)/i.test(voucher.url_s3 || '')
+}
 
 function subtitle(voucher) {
   return voucher.tipo?.toUpperCase() || ''

@@ -112,6 +112,30 @@ const includes = computed(() => {
   }).filter(item => item.label)
 })
 
+// el back manda slugs sin acento: salida_grupal_acompanada
+const SALIDA_ACENTOS = {
+  acompanada: 'acompañada',
+  espanol: 'español',
+  aereo: 'aéreo',
+  economica: 'económica'
+}
+
+function formatSalida(value) {
+  if (typeof value !== 'string') return ''
+
+  return value
+    .replace(/[_-]+/g, ' ')
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => {
+      const fixed = SALIDA_ACENTOS[word] || word
+      return fixed.charAt(0).toUpperCase() + fixed.slice(1)
+    })
+    .join(' ')
+}
+
 const categories = computed(() => {
   const list = []
 
@@ -131,7 +155,7 @@ const categories = computed(() => {
     list.push({
       icon: 'material-symbols:groups-outline-rounded',
       title: 'Salida',
-      subtitle: props.reserva.tipo_salida
+      subtitle: formatSalida(props.reserva.tipo_salida)
     })
   }
 
