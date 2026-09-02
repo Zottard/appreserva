@@ -73,11 +73,12 @@ const isOpen = computed({
 })
 
 // solo el PDF se puede ver en un iframe; el resto va directo a descarga.
-// la extensión puede llegar en tipo, en el nombre o en la url (firmada o no)
+// hoy la extensión sólo vive en el nombre: tipo es la categoría ("voucher")
+// y url_s3 termina en /download
 function isPreviewable(voucher) {
   if (!voucher.url_s3) return false
-  if (voucher.tipo) return /pdf/i.test(voucher.tipo)
-  return /\.pdf($|[?#])/i.test(voucher.nombre || '') || /\.pdf($|[?#])/i.test(voucher.url_s3)
+  if (/\.pdf($|[?#])/i.test(voucher.nombre || '')) return true
+  return /pdf/i.test(voucher.tipo || '')
 }
 
 function subtitle(voucher) {
