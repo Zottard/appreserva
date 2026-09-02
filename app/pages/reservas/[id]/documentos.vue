@@ -72,9 +72,12 @@ const isOpen = computed({
   set: (value) => { if (!value) preview.value = null }
 })
 
-// solo el PDF se puede ver en un iframe; el resto va directo a descarga
+// solo el PDF se puede ver en un iframe; el resto va directo a descarga.
+// la extensión puede llegar en tipo, en el nombre o en la url (firmada o no)
 function isPreviewable(voucher) {
-  return /\.pdf(\?|$)/i.test(voucher.url_s3 || '')
+  if (!voucher.url_s3) return false
+  if (voucher.tipo) return /pdf/i.test(voucher.tipo)
+  return /\.pdf($|[?#])/i.test(voucher.nombre || '') || /\.pdf($|[?#])/i.test(voucher.url_s3)
 }
 
 function subtitle(voucher) {
